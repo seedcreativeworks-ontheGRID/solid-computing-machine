@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vela Health — A clinician dashboard that triages 3.1x faster | Maren Voss</title>
+<meta name="description" content="How Maren Voss redesigned Vela Health's clinician triage dashboard around clinical severity instead of chronology, cutting triage time 3.1x.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%2317140F'/%3E%3Cpath d='M10 28V12l10 11 10-11v16' stroke='%23F7F5F0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='30' cy='12' r='2.6' fill='%23B4552E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-nav" data-nav>
+  <div class="wrap nav-row">
+    <a class="brand" href="../index.html" aria-label="Maren Voss — home">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M8 29V11l12 13 12-13v18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="32" cy="11" r="3" fill="var(--c-accent)"/>
+      </svg>
+      <span><span class="brand-name">Maren Voss</span><span class="brand-role">Product Designer</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#proof">Proof</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <a class="btn btn-ghost" href="../index.html#contact" style="padding:0.7rem 1.2rem; font-size:var(--fs-body-xs);" data-magnetic>Let's talk</a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-panel" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+  <div class="nav-progress" data-nav-progress></div>
+</header>
+
+<div class="mobile-panel" id="mobile-panel" data-mobile-panel>
+  <nav aria-label="Mobile">
+    <a href="../index.html#work">Work</a>
+    <a href="../index.html#process">Process</a>
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#proof">Proof</a>
+    <a href="../index.html#contact">Contact</a>
+  </nav>
+  <div class="mobile-foot">
+    <a class="text-link" href="mailto:hello@marenvoss.design">hello@marenvoss.design</a>
+  </div>
+</div>
+
+<main id="main">
+  <section class="cs-hero">
+    <div class="wrap">
+      <div class="cs-hero-top">
+        <a class="text-link" href="../index.html#work">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" style="transform:rotate(225deg);"><path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All case studies
+        </a>
+        <span class="text-xs text-mono">02 / 03</span>
+      </div>
+
+      <div data-reveal>
+        <div class="case-tags" style="margin-bottom:var(--space-5);">
+          <span class="tag">Healthtech</span><span class="tag">B2B</span><span class="tag">Systems Design</span><span class="tag">Clinical Workflow</span>
+        </div>
+        <h1 class="text-balance" style="max-width:20ch;">A clinician dashboard that triages 3.1x faster</h1>
+        <p class="text-l text-pretty" style="margin-top:var(--space-6); max-width:60ch;">Vela Health's care teams were missing high-risk patients in a noisy, chronological alert feed. I redesigned the triage experience around clinical severity — without touching their underlying data model.</p>
+      </div>
+
+      <dl class="cs-hero-meta">
+        <div><dt>Client</dt><dd>Vela Health (remote care)</dd></div>
+        <div><dt>Role</dt><dd>Senior Product Designer</dd></div>
+        <div><dt>Timeline</dt><dd>14 weeks</dd></div>
+        <div><dt>Team</dt><dd>1 PM · 3 engineers · me</dd></div>
+      </dl>
+
+      <figure class="cs-cover" data-reveal>
+        <svg viewBox="0 0 1200 675" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+          <rect width="1200" height="675" fill="var(--c-bg-sunken)"/>
+          <rect x="120" y="90" width="320" height="495" rx="8" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)"/>
+          <rect x="150" y="120" width="160" height="14" rx="3" fill="var(--c-ink-faint)" opacity="0.6"/>
+          <rect x="150" y="150" width="260" height="80" rx="6" fill="var(--c-accent-soft)" stroke="var(--c-accent)"/>
+          <circle cx="172" cy="180" r="8" fill="var(--c-accent)"/>
+          <rect x="192" y="168" width="140" height="10" rx="3" fill="var(--c-ink)" opacity="0.55"/>
+          <rect x="192" y="188" width="100" height="8" rx="3" fill="var(--c-ink-faint)"/>
+          <rect x="150" y="244" width="260" height="64" rx="6" fill="none" stroke="var(--c-border-strong)"/>
+          <circle cx="172" cy="266" r="8" fill="none" stroke="var(--c-ink-faint)"/>
+          <rect x="192" y="260" width="120" height="8" rx="3" fill="var(--c-border-strong)"/>
+          <rect x="150" y="322" width="260" height="64" rx="6" fill="none" stroke="var(--c-border-strong)" opacity="0.6"/>
+          <circle cx="172" cy="344" r="8" fill="none" stroke="var(--c-ink-faint)" opacity="0.6"/>
+          <rect x="192" y="338" width="120" height="8" rx="3" fill="var(--c-border-strong)" opacity="0.6"/>
+
+          <rect x="480" y="90" width="600" height="230" rx="8" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)"/>
+          <rect x="512" y="120" width="180" height="14" rx="3" fill="var(--c-ink-faint)" opacity="0.6"/>
+          <path d="M512 280 L560 240 L600 260 L650 200 L700 220 L760 160 L1040 190" stroke="var(--c-accent)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <rect x="480" y="352" width="600" height="233" rx="8" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)"/>
+          <rect x="512" y="382" width="180" height="14" rx="3" fill="var(--c-ink-faint)" opacity="0.6"/>
+          <circle cx="620" cy="480" r="66" fill="none" stroke="var(--c-border-strong)" stroke-width="16"/>
+          <circle cx="620" cy="480" r="66" fill="none" stroke="var(--c-accent)" stroke-width="16" stroke-dasharray="310 415" stroke-linecap="round" transform="rotate(-90 620 480)"/>
+          <text x="760" y="470" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--c-ink-faint)">TRIAGE TIME</text>
+          <text x="760" y="495" font-family="Fraunces, serif" font-size="28" fill="var(--c-ink)">1m18s</text>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section-pad-tight">
+    <div class="wrap">
+      <div class="cs-body">
+        <nav class="cs-toc" aria-label="On this page">
+          <a href="#overview">Overview</a>
+          <a href="#problem">The problem</a>
+          <a href="#constraints">Constraints</a>
+          <a href="#process">Process</a>
+          <a href="#decisions">Key decisions</a>
+          <a href="#outcomes">Outcomes</a>
+          <a href="#reflection">Reflection</a>
+        </nav>
+
+        <div>
+          <div class="cs-block" id="overview" data-reveal>
+            <p class="eyebrow">Overview</p>
+            <h2 style="margin-top:var(--space-5);">Scaling caseload without scaling headcount.</h2>
+            <p class="text-l">Vela Health runs remote chronic-care programs for patients discharged from hospital care. Their clinical team monitors continuous vitals and patient-reported data through a dashboard — but as their patient base grew, clinicians were increasingly missing early warning signs buried in an undifferentiated, chronological alert feed. Growth was being blocked by UX, not by clinical capacity.</p>
+          </div>
+
+          <div class="cs-block" id="problem" data-reveal>
+            <p class="eyebrow">The problem</p>
+            <h2 style="margin-top:var(--space-5); max-width:26ch;">A feed that treated every alert as equally urgent.</h2>
+            <p class="text-l">The legacy dashboard listed patient alerts in the order they arrived — a mildly elevated heart-rate reading sat visually identical to a dangerous blood-oxygen drop. Clinicians developed manual workarounds (personal spreadsheets, sticky notes) to track what actually needed attention, which didn't scale and introduced real clinical risk. Shadowing sessions surfaced a recurring pattern: alert fatigue was causing genuinely high-risk cases to be triaged later than they should have been.</p>
+          </div>
+
+          <div class="cs-block" id="constraints" data-reveal>
+            <p class="eyebrow">Constraints</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Designing inside a live clinical system.</h2>
+            <div class="cs-cols">
+              <div class="cs-col">
+                <h4><span class="dot"></span>Compliance</h4>
+                <p class="text-m">All patient data handling had to remain HIPAA-compliant; no new data collection or third-party tooling could be introduced mid-project.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Data model</h4>
+                <p class="text-m">The backend severity-scoring logic couldn't change in this cycle — the redesign had to work with existing data, not new fields.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Dual audiences</h4>
+                <p class="text-m">Nurse-practitioners and physicians used the dashboard differently — one needed rapid triage, the other deeper case review — and both had to be served by one system.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Design debt</h4>
+                <p class="text-m">The existing design system had accumulated inconsistent patterns across three years of fast shipping; I could extend it, not rebuild it wholesale, given the timeline.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block" id="process" data-reveal>
+            <p class="eyebrow">Process</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Design research, done in scrubs.</h2>
+            <ul class="cs-list">
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Shadowed 8 clinicians during live triage sessions to see exactly how they scanned, prioritized, and acted on alerts in real time.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Built a jobs-to-be-done map distinguishing "rapid triage" moments from "deep case review" moments — they needed different interfaces, not one compromise.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Ran card sorting with clinical staff to validate the information hierarchy before any interface work began.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Designed a severity-first triage queue and tested it across three rounds with working clinicians, not proxies.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Extended the existing design system with new severity and status patterns, documented for the two other clinical modules already on the roadmap.</li>
+            </ul>
+          </div>
+
+          <div class="cs-block" id="decisions" data-reveal>
+            <p class="eyebrow">Key decisions</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Severity first, chronology second.</h2>
+            <div class="cs-cols" style="grid-template-columns:1fr;">
+              <div class="cs-col">
+                <h4><span class="dot"></span>Severity + recency scored queue</h4>
+                <p class="text-m">Replaced the chronological feed with a triage queue ranked by clinical severity first, recency second — surfacing the cases that needed attention now, not just the cases that arrived last.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>At-a-glance risk cards</h4>
+                <p class="text-m">Designed compact patient cards that surfaced the two or three data points that actually drove a triage decision, instead of requiring a click into a full record for every case.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Inline actioning</h4>
+                <p class="text-m">Common responses — acknowledge, escalate, schedule follow-up — became inline actions instead of modal hops, cutting clicks per decision roughly in half.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Dual-coded risk, not color-only</h4>
+                <p class="text-m">Risk levels were encoded with both color and iconography/shape, so the system stayed usable for clinicians with color vision deficiencies — a non-negotiable in a clinical tool.</p>
+              </div>
+            </div>
+
+            <figure class="cs-image">
+              <svg viewBox="0 0 1200 460" fill="none" aria-hidden="true">
+                <rect width="1200" height="460" fill="var(--c-bg-sunken)"/>
+                <rect x="80" y="60" width="1040" height="90" rx="6" fill="var(--c-bg-raised)" stroke="var(--c-accent)"/>
+                <path d="M112 105a10 10 0 1 1 0 0.01" fill="var(--c-accent)"/>
+                <circle cx="112" cy="105" r="10" fill="var(--c-accent)"/>
+                <rect x="140" y="90" width="220" height="10" rx="3" fill="var(--c-ink)" opacity="0.6"/>
+                <rect x="140" y="108" width="160" height="8" rx="3" fill="var(--c-ink-faint)"/>
+                <text x="980" y="112" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--c-accent)">CRITICAL</text>
+                <rect x="80" y="164" width="1040" height="80" rx="6" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)"/>
+                <rect x="112" y="196" width="20" height="20" rx="10" fill="none" stroke="var(--c-ink-faint)" stroke-width="1.6"/>
+                <rect x="150" y="190" width="220" height="10" rx="3" fill="var(--c-border-strong)"/>
+                <rect x="150" y="208" width="160" height="8" rx="3" fill="var(--c-border-strong)"/>
+                <text x="1010" y="210" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--c-ink-faint)">ELEVATED</text>
+                <rect x="80" y="260" width="1040" height="80" rx="6" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)" opacity="0.6"/>
+                <text x="1010" y="306" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--c-ink-faint)">ROUTINE</text>
+              </svg>
+              <figcaption>Fig. 1 — Severity-ranked triage queue with dual-coded risk indicators.</figcaption>
+            </figure>
+          </div>
+
+          <div class="cs-block" id="outcomes" data-reveal>
+            <p class="eyebrow">Outcomes</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Faster triage, without adding clinical headcount.</h2>
+            <div class="grid cs-outcome-grid">
+              <div class="cs-outcome"><div class="stat-num">3.1<span style="color:var(--c-accent);">x</span></div><div class="stat-label">Faster triage per patient (4m → 1m18s)</div></div>
+              <div class="cs-outcome"><div class="stat-num">+40<span style="color:var(--c-accent);">%</span></div><div class="stat-label">Caseload supported per clinician</div></div>
+              <div class="cs-outcome"><div class="stat-num">2</div><div class="stat-label">Additional clinical modules built on this pattern</div></div>
+            </div>
+            <p class="text-l" style="margin-top:var(--space-7);">Follow-up surveys showed a marked drop in clinician-reported alert fatigue, and the severity-first triage pattern became the base pattern for two subsequent clinical modules — a system, not a one-off screen.</p>
+          </div>
+
+          <div class="cs-block" id="reflection" data-reveal>
+            <p class="eyebrow">Reflection</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">What I'd tell another startup facing this.</h2>
+            <p class="text-l">In high-stakes workflows, the biggest UX win is rarely a new feature — it's re-ranking what the user sees first. Spend the research budget on watching real usage before touching the interface; the fix is often information architecture, not visual design.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-next">
+    <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; gap:var(--space-6); flex-wrap:wrap;">
+      <div><p class="text-xs text-mono">Next case study</p></div>
+      <a href="cargo-lane.html">
+        <span class="eyebrow no-rule">03 — Marketplace</span>
+        <h3>Whiteboard to shipped marketplace MVP in 8 weeks</h3>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p class="text-xs">© <span data-year>2026</span> Maren Voss.</p>
+      <a class="back-to-top" href="#top">Back to top
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 12V4M4 8l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
