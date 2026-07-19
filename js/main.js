@@ -186,6 +186,21 @@
     });
   }
 
+  /* ---------- Contact form (mailto handoff — static site, no backend) ---------- */
+  var contactForm = document.querySelector('[data-contact-form]');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = contactForm.querySelector('#cf-name').value.trim();
+      var email = contactForm.querySelector('#cf-email').value.trim();
+      var message = contactForm.querySelector('#cf-message').value.trim();
+      var subject = 'Portfolio inquiry from ' + (name || 'website visitor');
+      var body = message + (email ? '\n\n— ' + name + ' (' + email + ')' : '\n\n— ' + name);
+      var href = 'mailto:muhammadshahid@moandco.org?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      window.location.href = href;
+    });
+  }
+
   /* ---------- Smooth-scroll with header offset for in-page anchors ---------- */
   document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(function (a) {
     a.addEventListener('click', function (e) {

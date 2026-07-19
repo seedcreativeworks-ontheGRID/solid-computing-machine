@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TD Bank — Designing an internal treasury platform for traders | Muhammad Shahid</title>
+<meta name="description" content="How Muhammad Shahid designed user journeys for VISION, TD Bank's internal Treasury Reporting application, embedded within Agile teams.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%2317140F'/%3E%3Cpath d='M10 28V12l10 11 10-11v16' stroke='%23F7F5F0' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='30' cy='12' r='2.6' fill='%23B4552E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-nav" data-nav>
+  <div class="wrap nav-row">
+    <a class="brand" href="../index.html" aria-label="Muhammad Shahid — home">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M8 29V11l12 13 12-13v18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="32" cy="11" r="3" fill="var(--c-accent)"/>
+      </svg>
+      <span><span class="brand-name">Muhammad Shahid</span><span class="brand-role">Senior Product Designer</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#proof">Proof</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <a class="btn btn-ghost" href="../index.html#contact" style="padding:0.7rem 1.2rem; font-size:var(--fs-body-xs);" data-magnetic>Let's talk</a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-panel" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+  <div class="nav-progress" data-nav-progress></div>
+</header>
+
+<div class="mobile-panel" id="mobile-panel" data-mobile-panel>
+  <nav aria-label="Mobile">
+    <a href="../index.html#work">Work</a>
+    <a href="../index.html#process">Process</a>
+    <a href="../index.html#about">About</a>
+    <a href="../index.html#proof">Proof</a>
+    <a href="../index.html#contact">Contact</a>
+  </nav>
+  <div class="mobile-foot">
+    <a class="text-link" href="mailto:muhammadshahid@moandco.org">muhammadshahid@moandco.org</a>
+  </div>
+</div>
+
+<main id="main">
+  <section class="cs-hero">
+    <div class="wrap">
+      <div class="cs-hero-top">
+        <a class="text-link" href="../index.html#work">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" style="transform:rotate(225deg);"><path d="M4 12 12 4M6 4h6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All case studies
+        </a>
+        <span class="text-xs text-mono">02 / 04</span>
+      </div>
+
+      <div data-reveal>
+        <div class="case-tags" style="margin-bottom:var(--space-5);">
+          <span class="tag">Fintech</span><span class="tag">Regulated Finance</span><span class="tag">Internal Tools</span>
+        </div>
+        <h1 class="text-balance" style="max-width:22ch;">Designing an internal treasury platform for traders at TD Bank</h1>
+        <p class="text-l text-pretty" style="margin-top:var(--space-6); max-width:60ch;">I designed the user journeys for VISION, TD's internal Treasury Reporting application — embedded with Agile developers and delivering Figma-to-React-ready flows in a regulated environment.</p>
+      </div>
+
+      <dl class="cs-hero-meta">
+        <div><dt>Client</dt><dd>TD Bank</dd></div>
+        <div><dt>Role</dt><dd>Senior Product Designer</dd></div>
+        <div><dt>Timeline</dt><dd>Aug 2023 – Sept 2024</dd></div>
+        <div><dt>Team</dt><dd>Treasury Technology</dd></div>
+      </dl>
+
+      <figure class="cs-cover" data-reveal>
+        <svg viewBox="0 0 1200 675" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+          <rect width="1200" height="675" fill="var(--c-bg-sunken)"/>
+          <rect x="120" y="90" width="330" height="480" rx="8" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)"/>
+          <rect x="152" y="122" width="150" height="14" rx="3" fill="var(--c-ink-faint)" opacity="0.6"/>
+          <rect x="152" y="156" width="266" height="86" rx="6" fill="var(--c-accent-soft)"/>
+          <circle cx="180" cy="199" r="10" fill="var(--c-accent)"/>
+          <rect x="204" y="184" width="150" height="10" rx="2" fill="var(--c-ink)" opacity="0.55"/>
+          <rect x="204" y="204" width="100" height="9" rx="2" fill="var(--c-ink-faint)"/>
+          <rect x="152" y="262" width="266" height="60" rx="6" fill="none" stroke="var(--c-border-strong)"/>
+          <rect x="152" y="336" width="266" height="60" rx="6" fill="none" stroke="var(--c-border-strong)" opacity="0.6"/>
+          <rect x="152" y="410" width="140" height="36" rx="4" fill="var(--c-ink)"/>
+
+          <rect x="500" y="90" width="580" height="230" rx="8" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)"/>
+          <rect x="532" y="122" width="180" height="14" rx="3" fill="var(--c-ink-faint)" opacity="0.6"/>
+          <path d="M532 280 L580 240 L620 260 L670 200 L720 220 L780 160 L1040 190" stroke="var(--c-accent)" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="1040" cy="190" r="5" fill="var(--c-accent)"/>
+
+          <rect x="500" y="352" width="580" height="218" rx="8" fill="var(--c-bg-raised)" stroke="var(--c-border-strong)"/>
+          <rect x="532" y="384" width="180" height="14" rx="3" fill="var(--c-ink-faint)" opacity="0.6"/>
+          <rect x="532" y="418" width="516" height="20" rx="3" fill="var(--c-border-strong)"/>
+          <rect x="532" y="450" width="516" height="20" rx="3" fill="var(--c-border)"/>
+          <rect x="532" y="482" width="340" height="20" rx="3" fill="var(--c-border)"/>
+          <rect x="532" y="522" width="200" height="30" rx="4" fill="var(--c-accent)"/>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section-pad-tight">
+    <div class="wrap">
+      <div class="cs-body">
+        <nav class="cs-toc" aria-label="On this page">
+          <a href="#overview">Overview</a>
+          <a href="#context">Context</a>
+          <a href="#constraints">Constraints</a>
+          <a href="#process">Process</a>
+          <a href="#decisions">Key decisions</a>
+          <a href="#landed">Where it landed</a>
+          <a href="#reflection">Reflection</a>
+        </nav>
+
+        <div>
+          <div class="cs-block" id="overview" data-reveal>
+            <p class="eyebrow">Overview</p>
+            <h2 style="margin-top:var(--space-5);">A working tool, not a showcase.</h2>
+            <p class="text-l">VISION is TD's internal application for Treasury Reporting — used by internal traders and external treasury clients to manage reporting functions. It's not a consumer product; it's a working tool for financial professionals who need speed and precision, not decoration.</p>
+          </div>
+
+          <div class="cs-block" id="context" data-reveal>
+            <p class="eyebrow">Context</p>
+            <h2 style="margin-top:var(--space-5); max-width:26ch;">Internal tools carry a real cost when they're confusing.</h2>
+            <p class="text-l">Internal financial tools often get treated as an afterthought — built by whoever's available, patched together over years. VISION's users are traders working under time pressure, and a confusing flow has a real cost: slower reporting, more errors, more support tickets.</p>
+          </div>
+
+          <div class="cs-block" id="constraints" data-reveal>
+            <p class="eyebrow">Constraints</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Designing for two very different users, one regulated tool.</h2>
+            <div class="cs-cols">
+              <div class="cs-col">
+                <h4><span class="dot"></span>Regulated environment</h4>
+                <p class="text-m">Every design decision for a treasury reporting tool has to account for financial services compliance.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Two user types</h4>
+                <p class="text-m">Internal traders and external treasury clients use the application differently, with different needs and technical fluency.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Developer handoff</h4>
+                <p class="text-m">Designs needed to translate directly into React-ready components, not just look right in Figma.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Sprint cadence</h4>
+                <p class="text-m">Embedded in an Agile team meant designing at the speed of the sprint, not on a separate design-only timeline.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block" id="process" data-reveal>
+            <p class="eyebrow">Process</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Embedded, not handed a spec.</h2>
+            <ul class="cs-list">
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Created the user journeys for internal clients and external traders using the Treasury Application.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Embedded within Agile teams, working closely with developers and product owners sprint over sprint.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Delivered Figma designs and Anima prototypes optimized for direct React integration by front-end teams.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Facilitated UX workshops and stakeholder feedback sessions to validate flows before build.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Applied visual hierarchy and typography principles to make a dense reporting tool easier to scan under pressure.</li>
+            </ul>
+          </div>
+
+          <div class="cs-block" id="decisions" data-reveal>
+            <p class="eyebrow">Key decisions</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Separate journeys, faster handoff.</h2>
+            <div class="cs-cols" style="grid-template-columns:1fr;">
+              <div class="cs-col">
+                <h4><span class="dot"></span>Two distinct journeys, not one generic flow</h4>
+                <p class="text-m">Mapped separate journeys for internal traders vs. external clients rather than forcing both into a single compromise flow.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Developer-ready handoff by default</h4>
+                <p class="text-m">Prioritized Figma + Anima prototypes built for direct React integration, shortening the gap between design and shipped code.</p>
+              </div>
+              <div class="cs-col">
+                <h4><span class="dot"></span>Structured workshops over one-off reviews</h4>
+                <p class="text-m">Ran scheduled UX workshops so stakeholder feedback landed before designs were locked, not after.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block" id="landed" data-reveal>
+            <p class="eyebrow">Where it landed</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">Shipped in a live, regulated environment.</h2>
+            <ul class="cs-list">
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Shipped inside a live regulated financial services environment, not a sandbox or prototype-only engagement.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Design-to-development handoff became faster and more predictable with React-ready prototypes.</li>
+              <li><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Alongside this role, I led TD's 200-member Design Book Club — a peer community across the broader design org.</li>
+            </ul>
+          </div>
+
+          <div class="cs-block" id="reflection" data-reveal>
+            <p class="eyebrow">Reflection</p>
+            <h2 style="margin-top:var(--space-5); max-width:24ch;">What I'd tell another designer facing this.</h2>
+            <p class="text-l">Internal tools rarely get design attention, which is exactly why they're an opportunity. A trader who trusts the tool moves faster; that trust gets built through the unglamorous work of hierarchy, consistency, and predictable interaction patterns.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-next">
+    <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; gap:var(--space-6); flex-wrap:wrap;">
+      <div><p class="text-xs text-mono">Next case study</p></div>
+      <a href="sirva.html">
+        <span class="eyebrow no-rule">03 — Relocation Services</span>
+        <h3>Designing across web and mobile for a global relocation platform</h3>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p class="text-xs">© <span data-year>2026</span> Muhammad Shahid.</p>
+      <a class="back-to-top" href="#top">Back to top
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 12V4M4 8l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
