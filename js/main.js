@@ -1,6 +1,6 @@
 /* ==========================================================================
-   MAREN VOSS — PORTFOLIO INTERACTION LAYER
-   Theme persistence, nav behavior, scroll reveal, TOC tracking.
+   SEED CREATIVE WORKS — INTERACTION LAYER
+   Theme persistence (dark-first), nav behavior, scroll reveal, TOC tracking.
    No external dependencies. Respects prefers-reduced-motion throughout.
    ========================================================================== */
 (function () {
@@ -9,8 +9,8 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root = document.documentElement;
 
-  /* ---------- Theme ---------- */
-  var THEME_KEY = 'mv-theme';
+  /* ---------- Theme (dark by default, light is an explicit opt-in) ---------- */
+  var THEME_KEY = 'scw-theme';
   var toggle = document.querySelector('[data-theme-toggle]');
 
   function getStoredTheme() {
@@ -20,14 +20,14 @@
     try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
   }
   function applyTheme(t) {
-    if (t === 'dark' || t === 'light') {
+    if (t === 'light' || t === 'dark') {
       root.setAttribute('data-theme', t);
     } else {
       root.removeAttribute('data-theme');
     }
     if (toggle) {
-      var isDark = t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
-      toggle.setAttribute('aria-pressed', String(isDark));
+      var isDark = t !== 'light';
+      toggle.setAttribute('aria-pressed', String(!isDark));
     }
   }
 
@@ -36,7 +36,7 @@
   if (toggle) {
     toggle.addEventListener('click', function () {
       var current = root.getAttribute('data-theme');
-      var isDark = current === 'dark' || (!current && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      var isDark = current !== 'light';
       var next = isDark ? 'light' : 'dark';
       applyTheme(next);
       setStoredTheme(next);
@@ -113,7 +113,6 @@
           var id = entry.target.getAttribute('id');
           navLinks.forEach(function (link) {
             var match = link.getAttribute('href') === '#' + id;
-            link.toggleAttribute('aria-current', match);
             if (match) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
           });
         }
@@ -193,10 +192,12 @@
       e.preventDefault();
       var name = contactForm.querySelector('#cf-name').value.trim();
       var email = contactForm.querySelector('#cf-email').value.trim();
+      var projectEl = contactForm.querySelector('#cf-project');
+      var project = projectEl ? projectEl.value : '';
       var message = contactForm.querySelector('#cf-message').value.trim();
-      var subject = 'Portfolio inquiry from ' + (name || 'website visitor');
-      var body = message + (email ? '\n\n— ' + name + ' (' + email + ')' : '\n\n— ' + name);
-      var href = 'mailto:muhammadshahid@moandco.org?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      var subject = 'New project inquiry — ' + (project || 'Website project') + ' (' + (name || 'website visitor') + ')';
+      var body = message + '\n\nProject type: ' + project + (email ? '\n\n— ' + name + ' (' + email + ')' : '\n\n— ' + name);
+      var href = 'mailto:hello@seedcreativeworks.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
       window.location.href = href;
     });
   }
