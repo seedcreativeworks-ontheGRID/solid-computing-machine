@@ -1,0 +1,532 @@
+// Trade Operations Control Tower — domain schema.
+// Facts extracted from documents (ParsedField) are modeled separately from
+// model-generated interpretations (AiRecommendation) per product principle #4.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Organization & identity
+// ---------------------------------------------------------------------------
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  users            User[]
+  suppliers        Supplier[]
+  purchaseOrders   PurchaseOrder[]
+  shipments        Shipment[]
+  documents        Document[]
+  exceptions       Exception[]
+  tasks            Task[]
+  activityEvents   ActivityEvent[]
+  costLines        CostLine[]
+  automationRules  AutomationRule[]
+  recommendations  AiRecommendation[]
+}
+
+enum OrgRole {
+  OWNER
+  OPS_MANAGER
+  TRADE_COORDINATOR
+  FINANCE
+  WAREHOUSE
+  VIEWER
+}
+
+model User {
+  id             String   @id @default(cuid())
+  organizationId String
+  name           String
+  email          String   @unique
+  role           OrgRole
+  initials       String
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  ownedShipments         Shipment[]         @relation("ShipmentOwner")
+  ownedExceptions        Exception[]        @relation("ExceptionOwner")
+  ownedTasks             Task[]             @relation("TaskOwner")
+  activityEvents         ActivityEvent[]    @relation("ActivityActor")
+  decidedRecommendations AiRecommendation[] @relation("RecommendationDecider")
+  approvalDecisions      ApprovalDecision[]
+  verifiedFields         ParsedField[]      @relation("ParsedFieldVerifier")
+}
+
+// ---------------------------------------------------------------------------
+// Suppliers
+// ---------------------------------------------------------------------------
+
+enum RiskLevel {
+  LOW
+  MODERATE
+  ELEVATED
+  HIGH
+}
+
+model Supplier {
+  id             String    @id @default(cuid())
+  organizationId String
+  name           String
+  country        String
+  category       String
+  riskLevel      RiskLevel @default(LOW)
+  onTimeRate     Float // 0-1, rolling on-time delivery rate
+  defectRate     Float // 0-1, rolling inspection defect rate
+  activeSince    DateTime
+  notes          String?
+
+  organization   Organization      @relation(fields: [organizationId], references: [id])
+  contacts       SupplierContact[]
+  purchaseOrders PurchaseOrder[]
+  riskSignals    RiskSignal[]
+  exceptions     Exception[]
+}
+
+model SupplierContact {
+  id         String  @id @default(cuid())
+  supplierId String
+  name       String
+  role       String
+  email      String
+  phone      String?
+
+  supplier Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+}
+
+model RiskSignal {
+  id          String    @id @default(cuid())
+  supplierId  String
+  signalType  String // e.g. "Late shipment pattern", "Quality complaint"
+  severity    RiskLevel
+  description String
+  detectedAt  DateTime  @default(now())
+
+  supplier Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Purchase orders
+// ---------------------------------------------------------------------------
+
+enum PurchaseOrderStatus {
+  DRAFT
+  CONFIRMED
+  IN_PRODUCTION
+  READY_TO_SHIP
+  SHIPPED
+  CLOSED
+  CANCELLED
+}
+
+model PurchaseOrder {
+  id                    String              @id @default(cuid())
+  organizationId        String
+  poNumber              String              @unique
+  supplierId            String
+  status                PurchaseOrderStatus @default(DRAFT)
+  orderDate             DateTime
+  requestedDeliveryDate DateTime
+  currency              String              @default("USD")
+  totalValue            Decimal             @db.Decimal(12, 2)
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  supplier     Supplier     @relation(fields: [supplierId], references: [id])
+
+  lineItems       PurchaseOrderLineItem[]
+  shipments       Shipment[]
+  documents       Document[]
+  exceptions      Exception[]
+  tasks           Task[]
+  activityEvents  ActivityEvent[]
+  costLines       CostLine[]
+  recommendations AiRecommendation[]
+}
+
+model PurchaseOrderLineItem {
+  id              String  @id @default(cuid())
+  purchaseOrderId String
+  sku             String
+  description     String
+  quantityOrdered Int
+  unitCost        Decimal @db.Decimal(10, 2)
+
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Shipments
+// ---------------------------------------------------------------------------
+
+enum ShipmentStage {
+  BOOKED
+  ORIGIN_PICKUP
+  PORT_OF_LOADING
+  IN_TRANSIT
+  PORT_OF_DISCHARGE
+  CUSTOMS_CLEARANCE
+  INLAND_TRANSIT
+  DELIVERED
+  CLOSED
+}
+
+model Shipment {
+  id              String        @id @default(cuid())
+  organizationId  String
+  purchaseOrderId String
+  shipmentNumber  String        @unique
+  stage           ShipmentStage @default(BOOKED)
+  originPort      String
+  destinationPort String
+  carrier         String?
+  vesselName      String?
+  incoterm        String
+  etd             DateTime?
+  revisedEtd      DateTime?
+  eta             DateTime?
+  revisedEta      DateTime?
+  riskLevel       RiskLevel     @default(LOW)
+  ownerId         String?
+  createdAt       DateTime      @default(now())
+
+  organization  Organization  @relation(fields: [organizationId], references: [id])
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+  owner         User?         @relation("ShipmentOwner", fields: [ownerId], references: [id])
+
+  milestones      ShipmentMilestone[]
+  containers      ShipmentContainer[]
+  documents       Document[]
+  exceptions      Exception[]
+  tasks           Task[]
+  activityEvents  ActivityEvent[]
+  costLines       CostLine[]
+  recommendations AiRecommendation[]
+}
+
+enum MilestoneStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETE
+  AT_RISK
+  DELAYED
+}
+
+model ShipmentMilestone {
+  id          String          @id @default(cuid())
+  shipmentId  String
+  name        String
+  sequence    Int
+  plannedDate DateTime
+  actualDate  DateTime?
+  status      MilestoneStatus @default(PENDING)
+
+  shipment Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+}
+
+model ShipmentContainer {
+  id              String  @id @default(cuid())
+  shipmentId      String
+  containerNumber String
+  sealNumber      String?
+  containerType   String // e.g. "40HC", "20GP"
+  grossWeightKg   Float?
+
+  shipment Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+}
+
+// ---------------------------------------------------------------------------
+// Documents & parsed facts
+// ---------------------------------------------------------------------------
+
+enum DocumentType {
+  COMMERCIAL_INVOICE
+  PACKING_LIST
+  BILL_OF_LADING
+  CERTIFICATE_OF_ORIGIN
+  CUSTOMS_DECLARATION
+  INSPECTION_REPORT
+  INSURANCE_CERTIFICATE
+  OTHER
+}
+
+enum DocumentReviewStatus {
+  PENDING_REVIEW
+  VERIFIED
+  FLAGGED
+}
+
+model Document {
+  id              String               @id @default(cuid())
+  organizationId  String
+  shipmentId      String?
+  purchaseOrderId String?
+  type            DocumentType
+  fileName        String
+  sourceLabel     String // e.g. "Supplier email attachment", "Freight forwarder portal"
+  reviewStatus    DocumentReviewStatus @default(PENDING_REVIEW)
+  uploadedAt      DateTime             @default(now())
+
+  organization  Organization   @relation(fields: [organizationId], references: [id])
+  shipment      Shipment?      @relation(fields: [shipmentId], references: [id])
+  purchaseOrder PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+
+  parsedFields   ParsedField[]
+  activityEvents ActivityEvent[]
+}
+
+model ParsedField {
+  id           String    @id @default(cuid())
+  documentId   String
+  fieldKey     String // e.g. "total_quantity", "invoice_amount"
+  fieldLabel   String // e.g. "Total Quantity"
+  value        String
+  confidence   Float // 0-1, model extraction confidence
+  verified     Boolean   @default(false)
+  verifiedById String?
+  verifiedAt   DateTime?
+
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  verifiedBy User?    @relation("ParsedFieldVerifier", fields: [verifiedById], references: [id])
+}
+
+// ---------------------------------------------------------------------------
+// Exceptions — the operating center of the product
+// ---------------------------------------------------------------------------
+
+enum ExceptionType {
+  QUANTITY_MISMATCH
+  DOCUMENT_MISSING
+  DOCUMENT_MISMATCH
+  ETA_DELAY
+  COST_VARIANCE
+  SUPPLIER_RISK
+  CUSTOMS_HOLD
+}
+
+enum ExceptionSeverity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum ExceptionStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  DISMISSED
+}
+
+model Exception {
+  id                String            @id @default(cuid())
+  organizationId    String
+  type              ExceptionType
+  severity          ExceptionSeverity
+  status            ExceptionStatus   @default(OPEN)
+  title             String
+  description       String
+  shipmentId        String?
+  purchaseOrderId   String?
+  supplierId        String?
+  ownerId           String?
+  detectedAt        DateTime          @default(now())
+  resolvedAt        DateTime?
+  resolutionSummary String?
+
+  organization  Organization   @relation(fields: [organizationId], references: [id])
+  shipment      Shipment?      @relation(fields: [shipmentId], references: [id])
+  purchaseOrder PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+  supplier      Supplier?      @relation(fields: [supplierId], references: [id])
+  owner         User?          @relation("ExceptionOwner", fields: [ownerId], references: [id])
+
+  tasks           Task[]
+  activityEvents  ActivityEvent[]
+  recommendations AiRecommendation[]
+}
+
+// ---------------------------------------------------------------------------
+// Tasks
+// ---------------------------------------------------------------------------
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+  BLOCKED
+}
+
+enum TaskUrgency {
+  LOW
+  NORMAL
+  HIGH
+}
+
+model Task {
+  id              String      @id @default(cuid())
+  organizationId  String
+  title           String
+  description     String?
+  status          TaskStatus  @default(OPEN)
+  urgency         TaskUrgency @default(NORMAL)
+  ownerId         String?
+  dueDate         DateTime?
+  exceptionId     String?
+  shipmentId      String?
+  purchaseOrderId String?
+  createdAt       DateTime    @default(now())
+  completedAt     DateTime?
+
+  organization  Organization   @relation(fields: [organizationId], references: [id])
+  owner         User?          @relation("TaskOwner", fields: [ownerId], references: [id])
+  exception     Exception?     @relation(fields: [exceptionId], references: [id])
+  shipment      Shipment?      @relation(fields: [shipmentId], references: [id])
+  purchaseOrder PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+
+  activityEvents ActivityEvent[]
+}
+
+// ---------------------------------------------------------------------------
+// Activity / audit trail
+// ---------------------------------------------------------------------------
+
+model ActivityEvent {
+  id              String   @id @default(cuid())
+  organizationId  String
+  occurredAt      DateTime @default(now())
+  actorId         String?
+  actorLabel      String // e.g. "Parsing Engine", "Sarah Nguyen", "Automation Rule"
+  eventType       String // e.g. "po_created", "exception_detected", "task_assigned"
+  summary         String
+  shipmentId      String?
+  purchaseOrderId String?
+  exceptionId     String?
+  documentId      String?
+  taskId          String?
+
+  organization  Organization   @relation(fields: [organizationId], references: [id])
+  actor         User?          @relation("ActivityActor", fields: [actorId], references: [id])
+  shipment      Shipment?      @relation(fields: [shipmentId], references: [id])
+  purchaseOrder PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+  exception     Exception?     @relation(fields: [exceptionId], references: [id])
+  document      Document?      @relation(fields: [documentId], references: [id])
+  task          Task?          @relation(fields: [taskId], references: [id])
+}
+
+// ---------------------------------------------------------------------------
+// Landed cost
+// ---------------------------------------------------------------------------
+
+enum CostCategory {
+  FREIGHT
+  DUTY
+  BROKERAGE
+  INLAND_TRANSPORT
+  WAREHOUSING
+  SURCHARGE
+  INSURANCE
+}
+
+enum CostStatus {
+  FORECAST
+  EXPECTED
+  CONFIRMED
+}
+
+model CostLine {
+  id              String       @id @default(cuid())
+  organizationId  String
+  shipmentId      String?
+  purchaseOrderId String?
+  category        CostCategory
+  status          CostStatus   @default(FORECAST)
+  currency        String       @default("USD")
+  forecastAmount  Decimal?     @db.Decimal(10, 2)
+  actualAmount    Decimal?     @db.Decimal(10, 2)
+  varianceNote    String?
+
+  organization  Organization   @relation(fields: [organizationId], references: [id])
+  shipment      Shipment?      @relation(fields: [shipmentId], references: [id])
+  purchaseOrder PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+}
+
+// ---------------------------------------------------------------------------
+// Automation
+// ---------------------------------------------------------------------------
+
+model AutomationRule {
+  id               String   @id @default(cuid())
+  organizationId   String
+  name             String
+  description      String
+  triggerEvent     String // e.g. "quantity_mismatch_detected"
+  condition        String // e.g. "variance > 5%"
+  action           String // e.g. "create_critical_exception"
+  requiresApproval Boolean  @default(true)
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+}
+
+// ---------------------------------------------------------------------------
+// AI recommendations — interpretations, kept distinct from ParsedField facts
+// ---------------------------------------------------------------------------
+
+enum RecommendationStatus {
+  PENDING
+  APPROVED
+  DISMISSED
+  AUTO_APPLIED
+}
+
+model AiRecommendation {
+  id                String               @id @default(cuid())
+  organizationId    String
+  exceptionId       String?
+  shipmentId        String?
+  purchaseOrderId   String?
+  title             String
+  recommendedAction String
+  rationale         String
+  confidence        Float // 0-1
+  status            RecommendationStatus @default(PENDING)
+  createdAt         DateTime             @default(now())
+  decidedById       String?
+  decidedAt         DateTime?
+
+  organization  Organization   @relation(fields: [organizationId], references: [id])
+  exception     Exception?     @relation(fields: [exceptionId], references: [id])
+  shipment      Shipment?      @relation(fields: [shipmentId], references: [id])
+  purchaseOrder PurchaseOrder? @relation(fields: [purchaseOrderId], references: [id])
+  decidedBy     User?          @relation("RecommendationDecider", fields: [decidedById], references: [id])
+
+  approvalDecisions ApprovalDecision[]
+}
+
+enum ApprovalDecisionType {
+  APPROVED
+  DISMISSED
+  MODIFIED
+}
+
+model ApprovalDecision {
+  id               String               @id @default(cuid())
+  recommendationId String
+  decidedById      String
+  decision         ApprovalDecisionType
+  note             String?
+  decidedAt        DateTime             @default(now())
+
+  recommendation AiRecommendation @relation(fields: [recommendationId], references: [id], onDelete: Cascade)
+  decidedBy      User             @relation(fields: [decidedById], references: [id])
+}
