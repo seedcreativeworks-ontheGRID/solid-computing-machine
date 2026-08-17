@@ -52,6 +52,8 @@ npm run lint               # eslint
 npx tsc --noEmit            # typecheck
 npx prisma migrate dev       # apply schema changes locally
 npx prisma db seed            # reset + reseed demo data (safe to rerun; it clears tables first)
+npx tsx scripts/generate-static-data.ts  # refresh the GitHub Pages snapshot from the live DB
+bash scripts/static-export.sh             # build the GitHub Pages static export to ./out
 ```
 
 Local Postgres: `postgresql://trade_ops:trade_ops_dev@localhost:5432/trade_ops_control_tower`
@@ -99,4 +101,8 @@ imports start failing.
 - Don't add a denormalized relation the schema doesn't need (see Shipment →
   Supplier note above) — check `docs/plan.md`'s data model section first.
 - Don't skip `ActivityEvent` writes on new mutations.
+- Don't make `dynamic`/`dynamicParams` a computed expression, and don't add
+  new Server Actions without checking `docs/plan.md`'s GitHub Pages section
+  first — both silently break `scripts/static-export.sh`'s build (confirmed
+  by testing, not assumed).
 

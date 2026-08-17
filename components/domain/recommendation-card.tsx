@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Check, X, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,18 @@ export function RecommendationCard({
   };
 }) {
   const [isPending, startTransition] = useTransition();
-  const isDecided = recommendation.status !== "PENDING";
+  // Optimistic local override: on the real (Prisma-backed) build this just
+  // converges with the server-confirmed status after revalidation; on the
+  // static-export build (no server to revalidate against) it's what
+  // actually drives the UI. See lib/actions/recommendations.static.ts.
+  const [localStatus, setLocalStatus] = useState<RecommendationStatus | null>(null);
+  const status = localStatus ?? recommendation.status;
+  const isDecided = status !== "PENDING";
+
+  function handle(decision: "APPROVED" | "DISMISSED") {
+    setLocalStatus(decision);
+    startTransition(() => (decision === "APPROVED" ? approveRecommendation : dismissRecommendation)(recommendation.id));
+  }
 
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-border p-4">
@@ -46,25 +57,13 @@ export function RecommendationCard({
 
       <div className="flex items-center justify-between">
         {isDecided ? (
-          <Badge variant={recommendation.status === "APPROVED" ? "success" : "outline"}>
-            {recommendationStatusLabel[recommendation.status]}
-          </Badge>
+          <Badge variant={status === "APPROVED" ? "success" : "outline"}>{recommendationStatusLabel[status]}</Badge>
         ) : (
           <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              variant="secondary"
-              disabled={isPending}
-              onClick={() => startTransition(() => approveRecommendation(recommendation.id))}
-            >
+            <Button size="sm" variant="secondary" disabled={isPending} onClick={() => handle("APPROVED")}>
               <Check className="size-3.5" /> Approve
             </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              disabled={isPending}
-              onClick={() => startTransition(() => dismissRecommendation(recommendation.id))}
-            >
+            <Button size="sm" variant="ghost" disabled={isPending} onClick={() => handle("DISMISSED")}>
               <X className="size-3.5" /> Dismiss
             </Button>
           </div>

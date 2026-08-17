@@ -33,6 +33,27 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) — it redirects to
 `/inbox`.
 
+## Live demo (GitHub Pages)
+
+The full app (above) needs a server and a live database, so it can't run on
+GitHub Pages. For a public link with no hosting account required, there is
+a separate **static-export build** — same UI, same seeded data, frozen at
+build time, with no backend after deploy (see "What's mocked" below).
+
+```bash
+npx tsx scripts/generate-static-data.ts   # snapshot the live DB to lib/static-data.json
+bash scripts/static-export.sh              # build the static export to ./out
+```
+
+`scripts/static-export.sh` swaps in server-action-free stand-ins for the two
+mutation actions and strips the route-segment config that's incompatible
+with `output: "export"`, then restores the real files afterward — see the
+comments in that script and `docs/plan.md` for exactly why (Next.js
+statically parses `dynamic`/`dynamicParams` as literals, and disallows
+Server Actions entirely with a static export — confirmed by testing against
+this Next.js version, not assumed). `.github/workflows/deploy-pages.yml`
+runs this same script on every push to the default branch.
+
 ### Verification commands
 
 ```bash
@@ -81,6 +102,12 @@ AI recommendation with a real rationale, and activity events. Reseeding
 - **Auth**: a single hardcoded user/organization via `lib/session.ts`.
 - **Document parsing**: documents and their extracted fields are seed data,
   not the output of an actual OCR/extraction service.
+- **On the GitHub Pages build only**: everything above, plus the whole data
+  layer (`lib/repo.ts` reads a frozen `lib/static-data.json` snapshot
+  instead of Prisma) and the two mutations — recommendation approve/dismiss
+  and task-done toggle only update local component state (no server, so
+  nothing persists across a reload). The real app (`npm run dev` / a Node
+  deploy) uses live Postgres and real Server Actions throughout.
 
 ## Highest-priority next steps
 
@@ -90,7 +117,7 @@ AI recommendation with a real rationale, and activity events. Reseeding
    linked record as context.
 3. Real authentication (the mock boundary is isolated specifically so this
    is a small change — see `lib/session.ts`).
-4. Pick a Node-capable deploy target (Vercel, Render, etc.) — this app
-   needs a running server for Prisma/Postgres and cannot be deployed to
-   static-only hosting (e.g. GitHub Pages, which serves this repo's
-   previous static portfolio site content in its git history).
+4. Pick a Node-capable deploy target (Vercel, Render, etc.) for the real
+   app — it needs a running server for Prisma/Postgres and cannot be
+   deployed to static-only hosting. The GitHub Pages build (see "Live demo"
+   above) is a static-export stand-in for a public link in the meantime.

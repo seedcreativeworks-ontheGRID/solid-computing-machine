@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+import { getUsers } from "@/lib/repo";
 import { getCurrentOrganization } from "@/lib/session";
 import { formatDate } from "@/lib/format";
 import { orgRoleLabel } from "@/lib/domain";
@@ -20,10 +20,7 @@ export const metadata: Metadata = { title: "Settings" };
 
 export default async function SettingsPage() {
   const organization = await getCurrentOrganization();
-  const users = await prisma.user.findMany({
-    where: { organizationId: organization.id },
-    orderBy: { name: "asc" },
-  });
+  const users = await getUsers(organization.id);
 
   return (
     <>

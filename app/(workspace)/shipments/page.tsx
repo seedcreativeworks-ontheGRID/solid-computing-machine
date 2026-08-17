@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+import { getShipmentsBrief } from "@/lib/repo";
 import { getCurrentOrganization } from "@/lib/session";
 import { formatDate } from "@/lib/format";
 import { riskLevelBadgeVariant, riskLevelLabel, shipmentStageLabel } from "@/lib/domain";
@@ -21,16 +21,7 @@ export const metadata: Metadata = { title: "Shipments" };
 
 export default async function ShipmentsPage() {
   const organization = await getCurrentOrganization();
-
-  const shipments = await prisma.shipment.findMany({
-    where: { organizationId: organization.id },
-    include: {
-      owner: true,
-      purchaseOrder: { include: { supplier: true } },
-      _count: { select: { exceptions: { where: { status: { in: ["OPEN", "IN_PROGRESS"] } } } } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  const shipments = await getShipmentsBrief(organization.id);
 
   return (
     <>

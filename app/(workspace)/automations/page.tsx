@@ -3,17 +3,14 @@ import { Zap, ShieldCheck } from "lucide-react";
 
 import { PageHeader } from "@/components/shell/page-header";
 import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
+import { getAutomationRules } from "@/lib/repo";
 import { getCurrentOrganization } from "@/lib/session";
 
 export const metadata: Metadata = { title: "Automations" };
 
 export default async function AutomationsPage() {
   const organization = await getCurrentOrganization();
-  const rules = await prisma.automationRule.findMany({
-    where: { organizationId: organization.id },
-    orderBy: { createdAt: "asc" },
-  });
+  const rules = await getAutomationRules(organization.id);
 
   return (
     <>

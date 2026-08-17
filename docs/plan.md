@@ -165,6 +165,47 @@ extraction/reasoning service populated them. To wire in a real model later:
 No UI changes are required for any of the three steps — `lib/actions/*` and
 the page queries are already written against the final shape.
 
+## GitHub Pages static-export build
+
+A separate build target exists purely to give this project a public link
+without requiring any hosting account: `scripts/static-export.sh` produces
+a fully static `output: "export"` build, deployed by
+`.github/workflows/deploy-pages.yml`. This is explicitly a demo stand-in,
+not a second deployment target for the real product — see README "Live
+demo (GitHub Pages)" and "What's mocked" for what it trades away (no
+server, no live database, mutations are local-only).
+
+Two Next.js constraints — confirmed by directly testing against this
+Next.js version, not assumed from general docs — shaped how this works:
+
+1. **`dynamic` / `dynamicParams` route-segment config must be a literal**,
+   not a computed expression — `export const dynamic = cond ? "a" : "b"`
+   fails the build with "Next.js can't recognize the exported `dynamic`
+   field." So the committed source stays dynamic-mode-only (literal
+   `"force-dynamic"` in the workspace layout; `dynamicParams` unset,
+   defaulting to `true`, on the two `[id]` routes), and the static build
+   uses `sed` to strip/inject the literals it needs before building.
+2. **Server Actions are entirely unsupported with `output: "export"`,
+   even if unreachable at runtime** — a `"use server"` file behind a dead
+   `if (false)` branch, or only ever dynamically `import()`-ed, still fails
+   the build with "Server Actions are not supported with static export."
+   Detection is structural (is the file part of the compiled graph at all),
+   not reachability-based. So `lib/actions/recommendations.ts` and
+   `lib/actions/tasks.ts` are physically swapped for
+   `*.static.ts` stand-ins (no `"use server"`, no Prisma import) before the
+   static build and restored from a plain file backup afterward — not a
+   `git checkout`, which would silently discard uncommitted work on those
+   files if the build ran before a commit.
+
+`lib/repo.ts` and `lib/session.ts` are the only files that branch on
+`STATIC_EXPORT` at runtime (safe, since neither is a route-segment config
+export or a Server Action) — every page calls these instead of Prisma
+directly, so the two builds render identical pages from different data
+sources. `RecommendationCard` and `TaskRow` hold local optimistic state
+regardless of build mode; on the real app it converges with the
+server-confirmed value after revalidation, and on the static build it's
+what actually drives the UI, since there's nothing to revalidate against.
+
 ## Future phases
 
 - Real authentication and multi-organization support (the mock boundary is

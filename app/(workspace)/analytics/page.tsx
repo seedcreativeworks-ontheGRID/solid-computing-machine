@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+import { getAnalytics } from "@/lib/repo";
 import { getCurrentOrganization } from "@/lib/session";
 import { formatCurrency, formatPercent } from "@/lib/format";
 import { riskLevelBadgeVariant, riskLevelLabel } from "@/lib/domain";
@@ -21,37 +21,15 @@ export const metadata: Metadata = { title: "Analytics" };
 
 export default async function AnalyticsPage() {
   const organization = await getCurrentOrganization();
-
-  const [openExceptions, resolvedExceptions, delayRiskShipments, costLines, riskySuppliers] = await Promise.all([
-    prisma.exception.count({ where: { organizationId: organization.id, status: { in: ["OPEN", "IN_PROGRESS"] } } }),
-    prisma.exception.findMany({
-      where: { organizationId: organization.id, status: "RESOLVED", resolvedAt: { not: null } },
-      select: { detectedAt: true, resolvedAt: true },
-    }),
-    prisma.shipment.count({
-      where: { organizationId: organization.id, riskLevel: { in: ["ELEVATED", "HIGH"] } },
-    }),
-    prisma.costLine.findMany({
-      where: { organizationId: organization.id, forecastAmount: { not: null }, actualAmount: { not: null } },
-    }),
-    prisma.supplier.findMany({
-      where: { organizationId: organization.id, riskLevel: { in: ["ELEVATED", "HIGH"] } },
-      include: { _count: { select: { exceptions: { where: { status: { in: ["OPEN", "IN_PROGRESS"] } } } } } },
-      orderBy: { onTimeRate: "asc" },
-    }),
-  ]);
-
-  const avgResolutionDays =
-    resolvedExceptions.length > 0
-      ? resolvedExceptions.reduce((sum, e) => {
-          const ms = e.resolvedAt!.getTime() - e.detectedAt.getTime();
-          return sum + ms / (1000 * 60 * 60 * 24);
-        }, 0) / resolvedExceptions.length
-      : null;
-
-  const totalForecast = costLines.reduce((sum, c) => sum + Number(c.forecastAmount), 0);
-  const totalActual = costLines.reduce((sum, c) => sum + Number(c.actualAmount), 0);
-  const totalVariance = totalActual - totalForecast;
+  const {
+    openExceptions,
+    resolvedCount,
+    avgResolutionDays,
+    delayRiskShipments,
+    totalForecast,
+    totalVariance,
+    riskySuppliers,
+  } = await getAnalytics(organization.id);
 
   return (
     <>
@@ -66,7 +44,7 @@ export default async function AnalyticsPage() {
           <StatTile
             label="Avg. resolution time"
             value={avgResolutionDays !== null ? `${avgResolutionDays.toFixed(1)}d` : "—"}
-            helpText={`${resolvedExceptions.length} resolved`}
+            helpText={`${resolvedCount} resolved`}
           />
           <StatTile
             label="Shipments at delay risk"

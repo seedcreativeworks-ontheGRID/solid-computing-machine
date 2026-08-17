@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+import { getSuppliersBrief } from "@/lib/repo";
 import { getCurrentOrganization } from "@/lib/session";
 import { formatPercent } from "@/lib/format";
 import { riskLevelBadgeVariant, riskLevelLabel } from "@/lib/domain";
@@ -20,19 +20,7 @@ export const metadata: Metadata = { title: "Suppliers" };
 
 export default async function SuppliersPage() {
   const organization = await getCurrentOrganization();
-
-  const suppliers = await prisma.supplier.findMany({
-    where: { organizationId: organization.id },
-    include: {
-      _count: {
-        select: {
-          purchaseOrders: true,
-          exceptions: { where: { status: { in: ["OPEN", "IN_PROGRESS"] } } },
-        },
-      },
-    },
-    orderBy: { name: "asc" },
-  });
+  const suppliers = await getSuppliersBrief(organization.id);
 
   return (
     <>

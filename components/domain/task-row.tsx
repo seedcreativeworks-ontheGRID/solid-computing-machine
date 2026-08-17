@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -23,15 +23,19 @@ export function TaskRow({
   };
 }) {
   const [isPending, startTransition] = useTransition();
-  const isDone = task.status === "DONE";
+  // See RecommendationCard for why this local override exists — it's what
+  // drives the UI on the static-export build (lib/actions/tasks.static.ts).
+  const [localDone, setLocalDone] = useState<boolean | null>(null);
+  const isDone = localDone ?? task.status === "DONE";
+
+  function handleToggle() {
+    setLocalDone(!isDone);
+    startTransition(() => toggleTaskDone(task.id));
+  }
 
   return (
     <div className="flex items-center gap-3 border-b border-border py-2.5 last:border-0">
-      <Checkbox
-        checked={isDone}
-        disabled={isPending}
-        onCheckedChange={() => startTransition(() => toggleTaskDone(task.id))}
-      />
+      <Checkbox checked={isDone} disabled={isPending} onCheckedChange={handleToggle} />
       <div className="flex flex-1 flex-col">
         <span className={`text-sm ${isDone ? "text-muted-foreground line-through" : ""}`}>{task.title}</span>
         <span className="text-xs text-muted-foreground">

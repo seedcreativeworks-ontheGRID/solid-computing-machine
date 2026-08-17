@@ -15,7 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { prisma } from "@/lib/prisma";
+import { getSupplierDetail, getSupplierIds } from "@/lib/repo";
+import { getCurrentOrganization } from "@/lib/session";
 import { formatDate, formatPercent } from "@/lib/format";
 import {
   purchaseOrderStatusLabel,
@@ -23,13 +24,31 @@ import {
   riskLevelLabel,
 } from "@/lib/domain";
 
+// Static export needs every dynamic id known at build time (dynamicParams
+// must be a literal `false`, injected by scripts/static-export.sh — see
+// docs/plan.md). The normal build renders suppliers on demand instead,
+// which is the default (dynamicParams unset = true) left here. An empty
+// generateStaticParams puts the route in on-demand ISR, cached per id after
+// first render — that's fine (not stale) because every mutation here goes
+// through lib/actions/*, which calls revalidatePath on this exact path.
+// (Do not "fix" this with `revalidate = 0` — that forces fully dynamic
+// rendering, which silently drops these routes from the static export.)
+
+export async function generateStaticParams() {
+  if (process.env.STATIC_EXPORT !== "1") return [];
+  const organization = await getCurrentOrganization();
+  const ids = await getSupplierIds(organization.id);
+  return ids.map((id) => ({ id }));
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const supplier = await prisma.supplier.findUnique({ where: { id }, select: { name: true } });
+  const organization = await getCurrentOrganization();
+  const supplier = await getSupplierDetail(organization.id, id);
   return { title: supplier?.name ?? "Supplier" };
 }
 
@@ -39,24 +58,8 @@ export default async function SupplierDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-
-  const supplier = await prisma.supplier.findUnique({
-    where: { id },
-    include: {
-      contacts: true,
-      riskSignals: { orderBy: { detectedAt: "desc" } },
-      exceptions: {
-        where: { status: { in: ["OPEN", "IN_PROGRESS"] } },
-        include: { owner: true, shipment: true },
-        orderBy: { detectedAt: "desc" },
-      },
-      purchaseOrders: {
-        include: { shipments: { select: { id: true, shipmentNumber: true, stage: true } } },
-        orderBy: { orderDate: "desc" },
-        take: 8,
-      },
-    },
-  });
+  const organization = await getCurrentOrganization();
+  const supplier = await getSupplierDetail(organization.id, id);
 
   if (!supplier) notFound();
 
