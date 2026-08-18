@@ -84,8 +84,8 @@ export function ShipmentTabs({
   }[];
 }) {
   return (
-    <Tabs defaultValue="overview" className="flex-1">
-      <TabsList className="px-6">
+    <Tabs defaultValue="overview" className="min-h-0 flex-1">
+      <TabsList className="shrink-0 px-6">
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="milestones">Milestones</TabsTrigger>
         <TabsTrigger value="documents">Documents ({documents.length})</TabsTrigger>
@@ -94,7 +94,7 @@ export function ShipmentTabs({
         <TabsTrigger value="recommendations">Recommendations ({recommendations.length})</TabsTrigger>
       </TabsList>
 
-      <div className="px-6 pb-8">
+      <div className="flex-1 overflow-y-auto px-6 pb-8">
         <TabsContent value="overview" className="grid grid-cols-2 gap-6">
           <div className="col-span-2 flex flex-col gap-3">
             <h3 className="text-sm font-semibold">Needs attention</h3>

@@ -73,7 +73,7 @@ export default async function SupplierDetailPage({
         }
       />
 
-      <div className="flex flex-col gap-6 overflow-auto px-6 py-6">
+      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 py-6">
         <div className="grid grid-cols-3 gap-3">
           <StatTile
             label="On-time delivery rate"

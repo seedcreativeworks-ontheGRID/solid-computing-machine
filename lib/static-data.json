@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T23:45:20.976Z",
+  "generatedAt": "2026-08-18T01:12:31.834Z",
   "organization": {
     "id": "cmsxvsz0q0000g97d00i1t08o",
     "name": "Kestrel Import Co.",
@@ -129,15 +129,7 @@
         "createdAt": "2026-07-31T23:45:19.412Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz74002ng97dtibhxg4e",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-2101",
-        "supplierId": "cmsxvsz33000fg97d7y76bzwo",
-        "status": "SHIPPED",
-        "orderDate": "2026-07-26T23:45:19.408Z",
-        "requestedDeliveryDate": "2026-09-24T23:45:19.408Z",
-        "currency": "USD",
-        "totalValue": "54900"
+        "poNumber": "PO-2101"
       },
       "recommendations": [
         {
@@ -213,15 +205,7 @@
         "createdAt": "2026-07-24T23:45:19.356Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz5k001ng97dip5gicqd",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-2077",
-        "supplierId": "cmsxvsz2d0007g97dyy8iur2j",
-        "status": "SHIPPED",
-        "orderDate": "2026-07-18T23:45:19.352Z",
-        "requestedDeliveryDate": "2026-09-16T23:45:19.352Z",
-        "currency": "USD",
-        "totalValue": "27650"
+        "poNumber": "PO-2077"
       },
       "recommendations": [
         {
@@ -297,15 +281,7 @@
         "createdAt": "2026-07-28T23:45:19.393Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz6f002bg97dik95y93s",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-2056",
-        "supplierId": "cmsxvsz37000hg97dfhx1h6um",
-        "status": "SHIPPED",
-        "orderDate": "2026-07-23T23:45:19.382Z",
-        "requestedDeliveryDate": "2026-09-21T23:45:19.382Z",
-        "currency": "USD",
-        "totalValue": "71200"
+        "poNumber": "PO-2056"
       },
       "recommendations": [
         {
@@ -381,15 +357,7 @@
         "createdAt": "2026-07-26T23:45:19.323Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz4n000zg97d5jws6pom",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-1988",
-        "supplierId": "cmsxvsz2m0009g97dsbxu44w4",
-        "status": "SHIPPED",
-        "orderDate": "2026-07-14T23:45:19.317Z",
-        "requestedDeliveryDate": "2026-09-12T23:45:19.317Z",
-        "currency": "USD",
-        "totalValue": "61500"
+        "poNumber": "PO-1988"
       },
       "recommendations": [
         {
@@ -521,15 +489,7 @@
         "createdAt": "2026-07-29T23:45:19.371Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz5z001zg97d5au9po25",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-2043",
-        "supplierId": "cmsxvsz2u000bg97d2rdkjsvv",
-        "status": "SHIPPED",
-        "orderDate": "2026-07-21T23:45:19.366Z",
-        "requestedDeliveryDate": "2026-09-19T23:45:19.366Z",
-        "currency": "USD",
-        "totalValue": "92400"
+        "poNumber": "PO-2043"
       },
       "recommendations": [
         {
@@ -605,15 +565,7 @@
         "createdAt": "2026-07-19T23:45:19.341Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz53001bg97da86n7eab",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-1942",
-        "supplierId": "cmsxvsz2m0009g97dsbxu44w4",
-        "status": "SHIPPED",
-        "orderDate": "2026-07-07T23:45:19.334Z",
-        "requestedDeliveryDate": "2026-09-05T23:45:19.334Z",
-        "currency": "USD",
-        "totalValue": "39800"
+        "poNumber": "PO-1942"
       },
       "recommendations": [
         {
@@ -689,15 +641,7 @@
         "createdAt": "2026-06-20T23:45:19.298Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz3s000ng97dp0t70oc1",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-1877",
-        "supplierId": "cmsxvsz2d0007g97dyy8iur2j",
-        "status": "CLOSED",
-        "orderDate": "2026-06-08T23:45:19.285Z",
-        "requestedDeliveryDate": "2026-08-07T23:45:19.285Z",
-        "currency": "USD",
-        "totalValue": "48200"
+        "poNumber": "PO-1877"
       },
       "recommendations": [
         {
@@ -773,15 +717,7 @@
         "createdAt": "2026-06-20T23:45:19.298Z"
       },
       "purchaseOrder": {
-        "id": "cmsxvsz3s000ng97dp0t70oc1",
-        "organizationId": "cmsxvsz0q0000g97d00i1t08o",
-        "poNumber": "PO-1877",
-        "supplierId": "cmsxvsz2d0007g97dyy8iur2j",
-        "status": "CLOSED",
-        "orderDate": "2026-06-08T23:45:19.285Z",
-        "requestedDeliveryDate": "2026-08-07T23:45:19.285Z",
-        "currency": "USD",
-        "totalValue": "48200"
+        "poNumber": "PO-1877"
       },
       "recommendations": []
     }

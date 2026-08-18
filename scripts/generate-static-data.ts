@@ -31,7 +31,9 @@ async function main() {
       owner: true,
       supplier: true,
       shipment: true,
-      purchaseOrder: true,
+      // Shape matches lib/repo.ts's exceptionInclude — poNumber is all the
+      // inbox table renders for a linked PO.
+      purchaseOrder: { select: { poNumber: true } },
       recommendations: { orderBy: { confidence: "desc" } },
     },
     orderBy: { detectedAt: "desc" },

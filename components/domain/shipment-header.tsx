@@ -26,7 +26,7 @@ export function ShipmentHeader({
   openExceptionCount: number;
 }) {
   return (
-    <div className="flex flex-col gap-4 border-b border-border px-6 py-5">
+    <div className="flex shrink-0 flex-col gap-4 border-b border-border px-6 py-5">
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
