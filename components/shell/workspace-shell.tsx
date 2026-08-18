@@ -18,9 +18,9 @@ export function WorkspaceShell({
   user: { name: string; initials: string; role: string };
 }) {
   return (
-    <div className="flex min-h-screen w-full">
-      <aside className="flex w-60 shrink-0 flex-col border-r border-border bg-card">
-        <Link href="/inbox" className="flex items-center gap-2 px-4 py-4">
+    <div className="flex h-screen w-full overflow-hidden">
+      <aside className="flex h-full w-60 shrink-0 flex-col border-r border-border bg-card">
+        <Link href="/inbox" className="flex shrink-0 items-center gap-2 px-4 py-4">
           <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Radar className="size-4" strokeWidth={2} />
           </span>
@@ -32,7 +32,7 @@ export function WorkspaceShell({
 
         <SidebarNav openExceptions={openExceptions} />
 
-        <div className="flex items-center gap-2.5 border-t border-border px-4 py-3.5">
+        <div className="flex shrink-0 items-center gap-2.5 border-t border-border px-4 py-3.5">
           <Avatar>
             <AvatarFallback>{user.initials}</AvatarFallback>
           </Avatar>
@@ -45,7 +45,7 @@ export function WorkspaceShell({
         </div>
       </aside>
 
-      <main className="flex min-w-0 flex-1 flex-col">{children}</main>
+      <main className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">{children}</main>
     </div>
   );
 }

@@ -40,7 +40,11 @@ const exceptionInclude = {
   owner: true,
   supplier: true,
   shipment: true,
-  purchaseOrder: true,
+  // Selected (not `true`) to exclude totalValue: Decimal — this object is
+  // passed straight into a Client Component (InboxTable) for client-side
+  // filtering, and React can't serialize Prisma's Decimal across that
+  // boundary. Only poNumber is ever rendered there.
+  purchaseOrder: { select: { poNumber: true } },
   recommendations: { orderBy: { confidence: "desc" } },
 } satisfies Prisma.ExceptionInclude;
 export type ExceptionWithRelations = Prisma.ExceptionGetPayload<{ include: typeof exceptionInclude }>;

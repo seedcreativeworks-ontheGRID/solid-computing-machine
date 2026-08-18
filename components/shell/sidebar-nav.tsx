@@ -28,7 +28,7 @@ export function SidebarNav({ openExceptions }: { openExceptions: number }) {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-1 flex-col gap-0.5 px-3 py-2">
+    <nav className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-2">
       {NAV_ITEMS.map((item) => {
         const active = pathname === item.href || pathname?.startsWith(item.href + "/");
         const Icon = item.icon;
