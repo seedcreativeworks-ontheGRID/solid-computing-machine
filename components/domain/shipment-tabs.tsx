@@ -85,23 +85,25 @@ export function ShipmentTabs({
 }) {
   return (
     <Tabs defaultValue="overview" className="min-h-0 flex-1">
-      <TabsList className="shrink-0 px-6">
-        <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="milestones">Milestones</TabsTrigger>
-        <TabsTrigger value="documents">Documents ({documents.length})</TabsTrigger>
-        <TabsTrigger value="costs">Costs</TabsTrigger>
-        <TabsTrigger value="activity">Activity</TabsTrigger>
-        <TabsTrigger value="recommendations">Recommendations ({recommendations.length})</TabsTrigger>
-      </TabsList>
+      <div className="shrink-0 overflow-x-auto">
+        <TabsList className="px-6">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="milestones">Milestones</TabsTrigger>
+          <TabsTrigger value="documents">Documents ({documents.length})</TabsTrigger>
+          <TabsTrigger value="costs">Costs</TabsTrigger>
+          <TabsTrigger value="activity">Activity</TabsTrigger>
+          <TabsTrigger value="recommendations">Recommendations ({recommendations.length})</TabsTrigger>
+        </TabsList>
+      </div>
 
-      <div className="flex-1 overflow-y-auto px-6 pb-8">
-        <TabsContent value="overview" className="grid grid-cols-2 gap-6">
-          <div className="col-span-2 flex flex-col gap-3">
+      <div className="flex-1 overflow-y-auto px-4 pb-8 sm:px-6">
+        <TabsContent value="overview" className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="flex flex-col gap-3 sm:col-span-2">
             <h3 className="text-sm font-semibold">Needs attention</h3>
             {exceptions.length === 0 ? (
               <p className="text-sm text-muted-foreground">No open exceptions on this shipment.</p>
             ) : (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {exceptions.map((e) => (
                   <ExceptionSummaryCard key={e.id} exception={e} />
                 ))}
@@ -130,7 +132,7 @@ export function ShipmentTabs({
           </div>
 
           {tasks.length > 0 ? (
-            <div className="col-span-2 flex flex-col gap-2">
+            <div className="flex flex-col gap-2 sm:col-span-2">
               <h3 className="text-sm font-semibold">Open tasks</h3>
               <div className="rounded-lg border border-border px-4">
                 {tasks.map((t) => (
@@ -141,11 +143,11 @@ export function ShipmentTabs({
           ) : null}
         </TabsContent>
 
-        <TabsContent value="milestones" className="max-w-md">
+        <TabsContent value="milestones" className="sm:max-w-md">
           <MilestoneTimeline milestones={milestones} />
         </TabsContent>
 
-        <TabsContent value="documents" className="grid grid-cols-2 gap-3">
+        <TabsContent value="documents" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {documents.length === 0 ? (
             <p className="text-sm text-muted-foreground">No documents uploaded yet.</p>
           ) : (
@@ -157,11 +159,11 @@ export function ShipmentTabs({
           <CostTable costLines={costLines} />
         </TabsContent>
 
-        <TabsContent value="activity" className="max-w-xl">
+        <TabsContent value="activity" className="sm:max-w-xl">
           <ActivityTimeline events={activityEvents} />
         </TabsContent>
 
-        <TabsContent value="recommendations" className="grid grid-cols-2 gap-3">
+        <TabsContent value="recommendations" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {recommendations.length === 0 ? (
             <p className="text-sm text-muted-foreground">No recommendations for this shipment.</p>
           ) : (

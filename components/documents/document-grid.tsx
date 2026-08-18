@@ -24,7 +24,7 @@ export function DocumentGrid({ documents }: { documents: DocumentWithRelations[]
 
   return (
     <>
-      <div className="flex items-center justify-end border-b border-border px-6 py-3">
+      <div className="flex items-center justify-end border-b border-border px-4 py-3 sm:px-6">
         <Select value={status} onValueChange={setStatus}>
           <SelectTrigger size="sm" className="text-xs">
             <span className="text-muted-foreground">Review status:</span>
@@ -41,11 +41,11 @@ export function DocumentGrid({ documents }: { documents: DocumentWithRelations[]
         </Select>
       </div>
 
-      <div className="flex-1 overflow-auto px-6 py-6">
+      <div className="flex-1 overflow-auto px-4 py-6 sm:px-6">
         {filtered.length === 0 ? (
           <p className="text-sm text-muted-foreground">No documents match this filter.</p>
         ) : (
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {filtered.map((doc) => (
               <div key={doc.id} className="flex flex-col gap-1.5">
                 {doc.shipment ? (

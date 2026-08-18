@@ -25,7 +25,7 @@ export default async function SettingsPage() {
   return (
     <>
       <PageHeader title="Settings" description="Workspace and team configuration." />
-      <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-6 py-6">
+      <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-4 py-6 sm:px-6">
         <section className="flex flex-col gap-3">
           <h2 className="text-sm font-semibold">Organization</h2>
           <div className="flex flex-col gap-1 rounded-lg border border-border p-4">

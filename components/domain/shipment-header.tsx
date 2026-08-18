@@ -26,8 +26,8 @@ export function ShipmentHeader({
   openExceptionCount: number;
 }) {
   return (
-    <div className="flex shrink-0 flex-col gap-4 border-b border-border px-6 py-5">
-      <div className="flex items-start justify-between gap-4">
+    <div className="flex shrink-0 flex-col gap-4 border-b border-border px-4 py-5 sm:px-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>{shipment.purchaseOrder.poNumber}</span>
@@ -44,8 +44,8 @@ export function ShipmentHeader({
           </div>
         </div>
 
-        <div className="flex flex-col items-end gap-2">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col items-start gap-2 sm:items-end">
+          <div className="flex flex-wrap items-center gap-2">
             <Badge variant={riskLevelBadgeVariant[shipment.riskLevel]}>
               {riskLevelLabel[shipment.riskLevel]} risk
             </Badge>

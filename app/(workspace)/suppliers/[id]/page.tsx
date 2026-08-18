@@ -73,8 +73,8 @@ export default async function SupplierDetailPage({
         }
       />
 
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 py-6">
-        <div className="grid grid-cols-3 gap-3">
+      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <StatTile
             label="On-time delivery rate"
             value={formatPercent(supplier.onTimeRate)}
@@ -101,7 +101,7 @@ export default async function SupplierDetailPage({
         {supplier.exceptions.length > 0 ? (
           <section className="flex flex-col gap-3">
             <h2 className="text-sm font-semibold">Active exceptions</h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {supplier.exceptions.map((e) => (
                 <ExceptionSummaryCard
                   key={e.id}
@@ -118,12 +118,12 @@ export default async function SupplierDetailPage({
             <h2 className="text-sm font-semibold">Risk signals</h2>
             <div className="flex flex-col gap-2">
               {supplier.riskSignals.map((signal) => (
-                <div key={signal.id} className="flex items-start justify-between gap-4 rounded-lg border border-border p-3">
+                <div key={signal.id} className="flex flex-col gap-2 rounded-lg border border-border p-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                   <div className="flex flex-col gap-0.5">
                     <span className="text-sm font-medium">{signal.signalType}</span>
                     <span className="text-xs text-muted-foreground">{signal.description}</span>
                   </div>
-                  <div className="flex shrink-0 flex-col items-end gap-1">
+                  <div className="flex shrink-0 items-center gap-1.5 sm:flex-col sm:items-end sm:gap-1">
                     <Badge variant={riskLevelBadgeVariant[signal.severity]}>{riskLevelLabel[signal.severity]}</Badge>
                     <span className="text-[11px] text-muted-foreground">{formatDate(signal.detectedAt)}</span>
                   </div>
@@ -169,7 +169,7 @@ export default async function SupplierDetailPage({
 
         <section className="flex flex-col gap-3">
           <h2 className="text-sm font-semibold">Contacts</h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {supplier.contacts.map((contact) => (
               <div key={contact.id} className="flex flex-col gap-1 rounded-lg border border-border p-3">
                 <span className="text-sm font-medium">{contact.name}</span>
