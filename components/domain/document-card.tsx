@@ -58,7 +58,7 @@ export function DocumentCard({
           <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
             Extracted fields
           </span>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
             {document.parsedFields.map((field) => (
               <div key={field.id} className="flex items-center justify-between gap-2 text-xs">
                 <span className="text-muted-foreground">{field.fieldLabel}</span>

@@ -65,7 +65,7 @@ export function InboxTable({
 
   return (
     <>
-      <div className="flex flex-wrap items-center gap-2 border-b border-border px-6 py-3">
+      <div className="flex flex-wrap items-center gap-2 border-b border-border px-4 py-3 sm:px-6">
         <FilterSelect
           label="Status"
           value={status}
@@ -125,7 +125,7 @@ export function InboxTable({
       </div>
 
       {filtered.length === 0 ? (
-        <div className="flex flex-1 flex-col items-center justify-center gap-1 px-6 py-20 text-center">
+        <div className="flex flex-1 flex-col items-center justify-center gap-1 px-4 py-20 text-center sm:px-6">
           <p className="text-sm font-medium">No exceptions match these filters</p>
           <p className="text-sm text-muted-foreground">Nothing needs attention right now for this view.</p>
         </div>

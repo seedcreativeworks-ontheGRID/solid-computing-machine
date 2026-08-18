@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Radar } from "lucide-react";
 
+import { MobileNav } from "@/components/shell/mobile-nav";
 import { SidebarNav } from "@/components/shell/sidebar-nav";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { orgRoleLabel } from "@/lib/domain";
@@ -18,8 +19,18 @@ export function WorkspaceShell({
   user: { name: string; initials: string; role: string };
 }) {
   return (
-    <div className="flex h-screen w-full overflow-hidden">
-      <aside className="flex h-full w-60 shrink-0 flex-col border-r border-border bg-card">
+    <div className="flex h-screen w-full flex-col overflow-hidden md:flex-row">
+      <div className="flex h-14 shrink-0 items-center justify-between border-b border-border bg-card px-3 md:hidden">
+        <Link href="/inbox" className="flex items-center gap-2">
+          <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <Radar className="size-4" strokeWidth={2} />
+          </span>
+          <span className="text-sm font-semibold">Control Tower</span>
+        </Link>
+        <MobileNav organizationName={organizationName} openExceptions={openExceptions} user={user} />
+      </div>
+
+      <aside className="hidden h-full w-60 shrink-0 flex-col border-r border-border bg-card md:flex">
         <Link href="/inbox" className="flex shrink-0 items-center gap-2 px-4 py-4">
           <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Radar className="size-4" strokeWidth={2} />
