@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
-    <div className="relative w-full overflow-x-auto">
+    <div className="relative w-full">
       <table
         data-slot="table"
         className={cn("w-full caption-bottom text-sm", className)}
@@ -14,14 +14,18 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
   );
 }
 
+// No overflow-x-auto wrapper here: every caller already renders <Table>
+// inside an ancestor with overflow-auto/overflow-y-auto (the page or list's
+// scroll container), which — per the CSS overflow spec's computed-value
+// coupling (a non-visible value on one axis forces the other to `auto`
+// too) — already scrolls horizontally as needed. That ancestor is also
+// therefore the *real* scrolling box, so `position: sticky` on TableHead
+// below binds to it correctly. A separate overflow-x-auto div here would
+// itself become the nearest scroll container for sticky purposes (even
+// with nothing to scroll, per spec) and silently break every sticky
+// header in the app — confirmed by testing, not assumed.
 function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return (
-    <thead
-      data-slot="table-header"
-      className={cn("[&_tr]:border-b [&_tr]:border-border", className)}
-      {...props}
-    />
-  );
+  return <thead data-slot="table-header" className={className} {...props} />;
 }
 
 function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
@@ -62,7 +66,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "h-9 px-3 text-left align-middle text-xs font-medium uppercase tracking-wide text-muted-foreground whitespace-nowrap",
+        "sticky top-0 z-10 h-9 whitespace-nowrap border-b border-border bg-background px-3 text-left align-middle text-xs font-medium uppercase tracking-wide text-muted-foreground",
         className
       )}
       {...props}
