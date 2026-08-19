@@ -73,8 +73,8 @@ export default async function SupplierDetailPage({
         }
       />
 
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-4 pb-6 sm:px-6">
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <StatTile
             label="On-time delivery rate"
             value={formatPercent(supplier.onTimeRate)}

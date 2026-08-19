@@ -34,8 +34,8 @@ export default async function AnalyticsPage() {
   return (
     <>
       <PageHeader title="Analytics" description="A tight read on operational health this period." />
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-4 pb-6 sm:px-6">
+        <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
           <StatTile
             label="Open exceptions"
             value={openExceptions}
